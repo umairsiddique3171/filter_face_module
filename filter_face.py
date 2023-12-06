@@ -1,8 +1,8 @@
 import os
 import cv2
 
-face = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_frontalface_default.xml')
-eye = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_eye.xml')
+face = cv2.CascadeClassifier('./haarcascades/haarcascade_frontalface_default.xml')
+eye = cv2.CascadeClassifier('./haarcascades/haarcascade_eye.xml')
 
 def crop_face(img,img_name):
     
