@@ -7,6 +7,10 @@ eye = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_eye.xml')
 
 
 def crop_face(img,img_name):
+
+    """
+    This basically crops faces from images and returned the croped image.
+    """
     
     img_resized = cv2.resize(img,(700,750))
     gray = cv2.cvtColor(img_resized,cv2.COLOR_BGR2GRAY)
@@ -27,6 +31,11 @@ def crop_face(img,img_name):
     
 
 def filter_face(datapath):
+
+    """
+    Datapath is the dataset path where all the classes folder containing the images are located.
+    This returns the filenames dictionary which contains the classes name along with filtered images filepath.
+    """
     
     cropped_datapath = os.path.join(datapath,'Cropped')
     filenames = {}
