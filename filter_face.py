@@ -1,8 +1,10 @@
-import os
-import cv2
+import os 
+import cv2 
 
-face = cv2.CascadeClassifier('./haarcascades/haarcascade_frontalface_default.xml')
-eye = cv2.CascadeClassifier('./haarcascades/haarcascade_eye.xml')
+
+face = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_frontalface_default.xml')
+eye = cv2.CascadeClassifier('./opencv/haarcascades/haarcascade_eye.xml')
+
 
 def crop_face(img,img_name):
     
@@ -25,20 +27,18 @@ def crop_face(img,img_name):
     
 
 def filter_face(datapath):
-
-    """
-    datapath would be the file path of the dataset where classes folder contains the images are located
-    """
     
     cropped_datapath = os.path.join(datapath,'Cropped')
-    if not os.path.exists(cropped_datapath):
-        os.mkdir(cropped_datapath)
+    filenames = {}
     img_dirs = []
     for x in os.scandir(datapath):
         if x.is_dir():
             img_dirs.append(x.path)
+    if not os.path.exists(cropped_datapath):
+        os.mkdir(cropped_datapath)
     for img_dir in img_dirs: 
         celebrity_name = img_dir.split("\\")[-1]
+        filenames[celebrity_name] = []
         count = 0
         for y in os.scandir(img_dir):
             if y.is_file() and y.name.endswith(('.jpg', '.jpeg', '.png')): 
@@ -55,3 +55,6 @@ def filter_face(datapath):
                         os.mkdir(cropped_folder)
                     if not os.path.exists(os.path.join(cropped_folder,f"{celebrity_name}_{count}.{extension}")):
                         cv2.imwrite(os.path.join(cropped_folder,f"{celebrity_name}_{count}.{extension}"),crop_img)
+                        filepath = os.path.join(cropped_folder,f"{celebrity_name}_{count}.{extension}")
+                        filenames[celebrity_name].append(filepath)
+    return filenames
